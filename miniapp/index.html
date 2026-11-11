@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>TUFA Mini App</title>
+<meta name="description" content="TUFA Drop 01 rebuilt as a Telegram Mini App: catalogue, sizes, bag and checkout inside a chat. A concept by Numinae Studio.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="TUFA · Telegram Mini App">
+<meta property="og:description" content="TUFA Drop 01 rebuilt as a Telegram Mini App: catalogue, sizes, bag and checkout inside a chat. A concept by Numinae Studio.">
+<meta property="og:url" content="https://numinae.github.io/tufa-drop/miniapp/">
+<meta property="og:image" content="https://numinae.github.io/tufa-drop/img/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TUFA · Telegram Mini App">
+<meta name="twitter:description" content="TUFA Drop 01 rebuilt as a Telegram Mini App: catalogue, sizes, bag and checkout inside a chat. A concept by Numinae Studio.">
+<meta name="twitter:image" content="https://numinae.github.io/tufa-drop/img/hero.jpg">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Instrument+Sans:wght@400;500;600&family=Martian+Mono:wght@400;500&display=swap">
+<style>
+/* TUFA Drop 01 as a Telegram Mini App.
+   Inside Telegram the header, Back button and Main Button are Telegram's own; outside Telegram (or with ?demo)
+   the page draws look-alikes so the whole flow can be shown and recorded. */
+:root{
+  --bone:#F1ECE6; --paper:#F8F5F1; --tuff:#D69A8A; --tuff-deep:#9E5A4A; --concrete:#8E8A85; --basalt:#151413; --signal:#FF5B1F;
+  --line:rgba(21,20,19,.12);
+  --display:'Big Shoulders Display','Arial Narrow',sans-serif;
+  --body:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Martian Mono',ui-monospace,Menlo,monospace;
+  --head:56px; --main:78px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{margin:0;height:100%;background:var(--bone);color:var(--basalt);font-family:var(--body);font-size:15px;line-height:1.45;overflow:hidden}
+button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+img{display:block;max-width:100%}
+.mono{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.num{font-variant-numeric:tabular-nums}
+
+/* --- Telegram look-alike chrome (demo only) --- */
+.tg-head{position:fixed;inset:0 0 auto;height:var(--head);z-index:40;display:grid;grid-template-columns:96px 1fr 96px;align-items:center;padding:0 12px;background:var(--bone);border-bottom:1px solid var(--line)}
+.tg-head .left{display:flex;align-items:center;gap:4px;font-size:16px;font-weight:500}
+.tg-head .left svg{width:20px;height:20px}
+.tg-head .mid{text-align:center;line-height:1.15}
+.tg-head .mid b{display:block;font-weight:600;font-size:16px}
+.tg-head .mid span{font-size:12px;color:#6F6B67}
+.tg-head .right{justify-self:end;width:32px;height:32px;border-radius:999px;display:grid;place-items:center;background:rgba(21,20,19,.06)}
+.tg-main{position:fixed;inset:auto 0 0;z-index:45;padding:10px 14px 18px;background:linear-gradient(180deg,rgba(241,236,230,0),var(--bone) 30%)}
+.tg-main button{width:100%;height:52px;border-radius:14px;background:var(--signal);color:var(--basalt);font-weight:600;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px}
+.tg-main button.off{background:#DAD4CD;color:#7E7974}
+body.in-tg .tg-head,body.in-tg .tg-main{display:none}
+body:not(.in-tg) .app{top:var(--head)}
+
+/* --- app --- */
+.app{position:fixed;inset:0;overflow:hidden}
+.view{position:absolute;inset:0;overflow-y:auto;background:var(--bone);padding-bottom:calc(var(--main) + 24px);scrollbar-width:none}
+.view::-webkit-scrollbar{display:none}
+
+/* home */
+.top{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px}
+.logo{font-family:var(--display);font-weight:900;font-size:30px;line-height:1;letter-spacing:.02em}
+.bag-pill{display:flex;align-items:center;gap:8px;height:34px;padding:0 14px 0 12px;border-radius:999px;background:var(--basalt);color:var(--bone)}
+.bag-pill .count{min-width:20px;height:20px;border-radius:999px;display:grid;place-items:center;background:var(--signal);color:var(--basalt);font-family:var(--mono);font-size:10px}
+.hero{position:relative;margin:0 16px;height:292px;border-radius:24px;overflow:hidden;color:var(--bone);background:var(--basalt)}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 28%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(21,20,19,0) 35%,rgba(21,20,19,.78))}
+.hero .in{position:absolute;inset:auto 16px 16px;z-index:1;display:grid;gap:10px}
+.hero .chips{display:flex;gap:6px}
+.chip{border-radius:999px;padding:5px 10px;border:1px solid rgba(241,236,230,.45);font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+.chip.hot{background:var(--signal);border-color:var(--signal);color:var(--basalt)}
+.hero h1{margin:0;font-family:var(--display);font-weight:900;font-size:62px;line-height:.84;text-transform:uppercase}
+.cd{display:flex;gap:6px}
+.cd div{min-width:52px;padding:7px 6px 5px;border-radius:12px;background:rgba(21,20,19,.55);border:1px solid rgba(241,236,230,.22);backdrop-filter:blur(6px);text-align:center}
+.cd b{display:block;font-family:var(--display);font-weight:700;font-size:24px;line-height:1}
+.cd span{font-family:var(--mono);font-size:8px;letter-spacing:.12em;color:rgba(241,236,230,.7)}
+.filters{display:flex;gap:8px;padding:16px 16px 4px;overflow:hidden}
+.filters span{flex-shrink:0;padding:8px 14px;border-radius:999px;border:1px solid var(--line);font-size:13px;font-weight:500}
+.filters span.on{background:var(--basalt);color:var(--bone);border-color:var(--basalt)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 12px;padding:12px 16px}
+.card{text-align:left;display:grid;gap:8px}
+.card .ph{position:relative;aspect-ratio:4/5;border-radius:18px;overflow:hidden;background:var(--tuff)}
+.card .ph img{width:100%;height:100%;object-fit:cover}
+.card .ph .tag{position:absolute;left:8px;top:8px;background:var(--bone);color:var(--basalt);border-radius:999px;padding:4px 8px;font-family:var(--mono);font-size:8px;letter-spacing:.1em}
+.card h3{margin:0;font-size:14px;font-weight:600;line-height:1.2}
+.card .meta{display:flex;justify-content:space-between;align-items:baseline;gap:6px}
+.card .meta .mono{color:#6F6B67;font-size:9px}
+.card .price{font-family:var(--mono);font-size:12px}
+
+/* product */
+.pimg{position:relative;height:338px;background:var(--tuff);border-radius:0 0 28px 28px;overflow:hidden}
+.pimg img{width:100%;height:100%;object-fit:cover}
+.dots{position:absolute;left:0;right:0;bottom:14px;display:flex;justify-content:center;gap:6px}
+.dots i{width:6px;height:6px;border-radius:999px;background:rgba(241,236,230,.55)}
+.dots i.on{width:18px;background:var(--bone)}
+.pbody{padding:14px 18px;display:grid;gap:10px}
+.pbody .chips{display:flex;gap:6px}
+.pbody .chip{border-color:var(--line)}
+.pbody h2{margin:0;font-family:var(--display);font-weight:900;font-size:44px;line-height:.86;text-transform:uppercase}
+.prow{display:flex;justify-content:space-between;align-items:baseline}
+.prow .mono{color:#6F6B67}
+.prow .pr{font-family:var(--display);font-weight:700;font-size:30px;line-height:1}
+.pbody p{margin:0;color:#4A4744;font-size:14px}
+.sizes{display:flex;gap:8px}
+.size{flex:1;height:48px;border-radius:14px;border:1.5px solid var(--line);font-family:var(--mono);font-size:13px;display:grid;place-items:center;background:var(--paper)}
+.size.on{background:var(--basalt);border-color:var(--basalt);color:var(--bone)}
+.size:disabled{color:#B5AFA9;background:transparent;text-decoration:line-through;cursor:default}
+.note{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:14px;background:var(--paper);border:1px solid var(--line);font-size:13px}
+.note b{color:var(--tuff-deep);font-weight:600}
+
+/* bag sheet */
+.scrim{position:absolute;inset:0;z-index:20;background:rgba(21,20,19,.45)}
+.sheet{position:absolute;inset:auto 0 0;z-index:21;max-height:92%;border-radius:28px 28px 0 0;background:var(--bone);padding:10px 18px calc(var(--main) + 16px);display:grid;gap:14px}
+.handle{justify-self:center;width:40px;height:5px;border-radius:999px;background:#CFC8C1}
+.sheet h2{margin:2px 0 0;font-family:var(--display);font-weight:900;font-size:40px;line-height:.9;text-transform:uppercase}
+.line{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center}
+.line img{width:64px;height:76px;border-radius:14px;object-fit:cover;background:var(--tuff)}
+.line b{display:block;font-size:15px;font-weight:600}
+.line .mono{color:#6F6B67}
+.step{display:flex;align-items:center;gap:10px;margin-top:6px}
+.step button{width:28px;height:28px;border-radius:999px;border:1px solid var(--line);display:grid;place-items:center;font-size:15px}
+.line .amt{font-family:var(--mono);font-size:13px}
+.sum{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:6px;font-size:14px}
+.sum div{display:flex;justify-content:space-between}
+.sum .tot{font-weight:600;font-size:16px}
+
+/* Telegram's native payment sheet, drawn for the demo */
+.pay{position:absolute;inset:auto 0 0;z-index:31;box-shadow:0 -10px 40px rgba(0,0,0,.18);background:#fff;border-radius:22px 22px 0 0;padding:12px 16px 22px;font-family:-apple-system,'Segoe UI',system-ui,var(--body);color:#000;display:grid;gap:12px}
+.pay .ph{display:flex;align-items:center;justify-content:space-between;font-weight:600;font-size:17px}
+.pay .ph button{width:30px;height:30px;border-radius:999px;background:#F1F1F4;display:grid;place-items:center}
+.pay .item{display:flex;gap:12px;align-items:center}
+.pay .item img{width:58px;height:58px;border-radius:12px;object-fit:cover}
+.pay .item b{display:block;font-size:15px}
+.pay .item span{font-size:13px;color:#8A8A8E}
+.pay .rows{border-radius:14px;background:#F4F4F7;overflow:hidden}
+.pay .rows div{display:grid;grid-template-columns:26px 1fr auto;gap:10px;align-items:center;padding:11px 12px;font-size:14px;border-bottom:1px solid #E5E5EA}
+.pay .rows div:last-child{border:0}
+.pay .rows small{display:block;color:#8A8A8E;font-size:12px}
+.pay .rows svg{width:20px;height:20px}
+.pay .prices{display:grid;gap:4px;font-size:14px;color:#3C3C43}
+.pay .prices div{display:flex;justify-content:space-between}
+.pay .prices .t{color:#000;font-weight:600;font-size:16px;padding-top:4px}
+.pay .go{height:50px;border-radius:12px;background:#2AABEE;color:#fff;font-weight:600;font-size:16px}
+.pay .fine{text-align:center;font-size:11px;color:#8A8A8E}
+
+/* confirmed */
+.done{display:grid;gap:16px;padding:28px 18px}
+.okc{width:84px;height:84px;border-radius:999px;background:var(--signal);display:grid;place-items:center}
+.done h2{margin:0;font-family:var(--display);font-weight:900;font-size:60px;line-height:.84;text-transform:uppercase}
+.done p{margin:0;color:#4A4744}
+.tl{display:grid;gap:0;padding:6px 14px;border-radius:18px;background:var(--paper);border:1px solid var(--line)}
+.tl div{display:flex;align-items:center;gap:12px;padding:10px 0;font-size:14px;border-bottom:1px solid var(--line)}
+.tl div:last-child{border:0}
+.tl i{width:24px;height:24px;border-radius:999px;display:grid;place-items:center;background:var(--basalt);flex-shrink:0}
+.tl i.wait{background:transparent;border:1.5px dashed var(--concrete)}
+.tl b{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:#6F6B67;font-weight:400}
+.bot{display:grid;gap:8px;padding:12px;border-radius:18px;background:var(--basalt);color:var(--bone)}
+.bot .who{display:flex;align-items:center;gap:8px}
+.bot .who i{width:28px;height:28px;border-radius:999px;background:var(--tuff);display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:12px;color:var(--basalt);font-style:normal}
+.bot .msg{padding:10px 12px;border-radius:16px 16px 16px 6px;background:#2A2826;font-size:14px}
+
+.toast{position:absolute;left:16px;right:16px;bottom:calc(var(--main) + 10px);z-index:30;display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:16px;background:var(--basalt);color:var(--bone);font-size:14px}
+.toast img{width:36px;height:42px;border-radius:9px;object-fit:cover}
+</style>
+</head>
+<body>
+<header class="tg-head" aria-hidden="true">
+  <button class="left" id="tgBack"><span id="tgLeft">Close</span></button>
+  <div class="mid"><b>TUFA</b><span>mini app</span></div>
+  <span class="right"><svg width="16" height="16" viewBox="0 0 24 24" fill="#151413"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></span>
+</header>
+
+<main class="app" id="app">
+  <section class="view" id="home">
+    <div class="top">
+      <span class="logo">TUFA</span>
+      <button class="bag-pill" id="bagPill" aria-label="Open bag"><span class="mono" style="font-size:10px">Bag</span><span class="count num" id="count">0</span></button>
+    </div>
+    <div class="hero">
+      <img src="img/look-arch.jpg" alt="A model in a dusty rose tee under a pink stone arch">
+      <div class="in">
+        <div class="chips"><span class="chip hot">Drop 01</span><span class="chip">07.11 · 20:00</span></div>
+        <h1>Pink<br>City</h1>
+        <div class="cd" aria-label="Time until the drop"><div><b id="cdD">07</b><span>DAYS</span></div><div><b id="cdH">00</b><span>HRS</span></div><div><b id="cdM">00</b><span>MIN</span></div><div><b id="cdS">00</b><span>SEC</span></div></div>
+      </div>
+    </div>
+    <div class="filters"><span class="on">All</span><span>Tops</span><span>Bottoms</span><span>Extras</span></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section class="view" id="product" hidden></section>
+  <section class="view" id="done" hidden></section>
+  <div class="scrim" id="scrim" hidden></div>
+  <section class="sheet" id="bag" hidden aria-label="Bag"></section>
+  <section class="pay" id="pay" hidden aria-label="Telegram checkout"></section>
+  <div class="toast" id="toast" hidden></div>
+</main>
+
+<footer class="tg-main" aria-hidden="true"><button id="mainBtn" hidden></button></footer>
+
+<script>
+const PRODUCTS=[
+  {id:'basalt',name:'Basalt Hoodie',colour:'Washed black',price:120,img:'img/product-hoodie.jpg',desc:'480 GSM brushed fleece, dropped shoulder, double-layer hood.',sizes:['S','M','L','XL'],soldOut:['S'],tag:'LOW STOCK'},
+  {id:'tuff',name:'Tuff Tee',colour:'Dusty rose',price:55,img:'img/product-tee.jpg',desc:'Boxy heavyweight jersey, garment-dyed to the colour of the stone.',sizes:['S','M','L','XL'],soldOut:[]},
+  {id:'cascade',name:'Cascade Cargo',colour:'Concrete grey',price:110,img:'img/product-cargo.jpg',desc:'Wide-leg ripstop with bellows pockets and ankle cords.',sizes:['S','M','L','XL'],soldOut:['XL']},
+  {id:'arch',name:'Arch Cap',colour:'Washed black',price:40,img:'img/product-cap.jpg',desc:'Unstructured six-panel canvas with a signal-orange tab.',sizes:['ONE'],soldOut:[]},
+  {id:'signal',name:'Signal Bag',colour:'Signal orange',price:75,img:'img/product-bag.jpg',desc:'Technical nylon crossbody for keys, phone and the rest.',sizes:['ONE'],soldOut:[]},
+];
+const DROP=Date.UTC(2026,10,7,16,0,0); // 07.11, 20:00 Yerevan
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const tg=window.Telegram&&Telegram.WebApp;
+const inTG=!!(tg&&tg.initData)&&!new URLSearchParams(location.search).has('demo');
+document.body.classList.toggle('in-tg',inTG);
+if(inTG){tg.ready();tg.expand();tg.setHeaderColor('#F1ECE6');tg.setBackgroundColor('#F1ECE6');tg.MainButton.setParams({color:'#FF5B1F',text_color:'#151413'});}
+
+let bag=[]; let current=null; let picked=null; let view='home';
+const money=n=>'$'+n;
+const total=()=>bag.reduce((a,l)=>a+PRODUCTS.find(p=>p.id===l.id).price*l.q,0);
+const items=()=>bag.reduce((a,l)=>a+l.q,0);
+const anim=(el,kf,ms,easing='cubic-bezier(.2,.8,.2,1)')=>el.animate(kf,{duration:ms,easing,fill:'both'});
+const haptic=k=>{try{inTG&&tg.HapticFeedback.impactOccurred(k)}catch(e){}};
+
+// one Main Button for both worlds: Telegram's own inside Telegram, the look-alike outside
+let mainHandler=null;
+function main(text,handler,enabled=true){
+  mainHandler=handler;
+  if(inTG){
+    if(!text){tg.MainButton.hide();return}
+    tg.MainButton.setText(text);enabled?tg.MainButton.enable():tg.MainButton.disable();tg.MainButton.show();return;
+  }
+  const b=$('mainBtn');
+  b.parentElement.hidden=!text;
+  if(!text){b.hidden=true;return}
+  if(b.hidden||b.dataset.t!==text){b.hidden=false;b.dataset.t=text;b.innerHTML=text;anim(b,[{opacity:.4,transform:'scale(.98)'},{opacity:1,transform:'scale(1)'}],220)}
+  b.classList.toggle('off',!enabled);b.disabled=!enabled;
+}
+if(inTG)tg.MainButton.onClick(()=>mainHandler&&mainHandler());
+$('mainBtn').addEventListener('click',()=>mainHandler&&mainHandler());
+function back(show,handler){
+  if(inTG){show?(tg.BackButton.show(),tg.BackButton.onClick(handler)):tg.BackButton.hide();return}
+  $('tgLeft').innerHTML=show?'<svg viewBox="0 0 24 24" fill="none" stroke="#151413" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;display:inline-block;vertical-align:-4px"><path d="M15 5l-7 7 7 7"/></svg> Back':'Close';
+  $('tgBack').onclick=show?handler:null;
+}
+
+function renderGrid(){
+  $('grid').innerHTML=PRODUCTS.map(p=>`<button class="card" data-open="${p.id}">
+    <div class="ph"><img src="${p.img}" alt="${esc(p.name)}">${p.tag?`<span class="tag">${p.tag}</span>`:''}</div>
+    <h3>${esc(p.name)}</h3><div class="meta"><span class="mono">${esc(p.colour)}</span><span class="price num">${money(p.price)}</span></div></button>`).join('');
+}
+function tick(){
+  let s=Math.max(0,Math.floor((DROP-Date.now())/1000));
+  const d=Math.floor(s/86400);s%=86400;const h=Math.floor(s/3600);s%=3600;const m=Math.floor(s/60);s%=60;
+  [['cdD',d],['cdH',h],['cdM',m],['cdS',s]].forEach(([k,v])=>$(k).textContent=String(v).padStart(2,'0'));
+}
+function homeMain(){items()?main(`View bag · ${items()}`,openBag):main(null)}
+
+function openProduct(id){
+  current=PRODUCTS.find(p=>p.id===id);picked=current.sizes.length===1?current.sizes[0]:null;view='product';
+  const v=$('product');
+  v.innerHTML=`<div class="pimg"><img src="${current.img}" alt="${esc(current.name)}"><div class="dots"><i class="on"></i><i></i><i></i></div></div>
+  <div class="pbody">
+    <div class="chips"><span class="chip">Drop 01</span><span class="chip">Ships 07.11</span></div>
+    <h2>${esc(current.name)}</h2>
+    <div class="prow"><span class="mono">${esc(current.colour)}</span><span class="pr num">${money(current.price)}</span></div>
+    <p>${esc(current.desc)}</p>
+    <div class="prow"><span class="mono">Size</span><span class="mono" style="text-decoration:underline">Size guide</span></div>
+    <div class="sizes">${current.sizes.map(s=>`<button class="size${picked===s?' on':''}" data-s="${s}" ${current.soldOut.includes(s)?`disabled aria-label="${s}, sold out"`:''}>${s}</button>`).join('')}</div>
+    <div class="note">📦 <span>Pick a size today, it ships on drop day: <b>07.11</b></span></div>
+  </div>`;
+  v.hidden=false;v.scrollTop=0;
+  anim(v,[{transform:'translateX(100%)'},{transform:'translateX(0)'}],340);
+  anim($('home'),[{transform:'translateX(0)',filter:'brightness(1)'},{transform:'translateX(-22%)',filter:'brightness(.92)'}],340);
+  back(true,closeProduct);productMain();
+}
+function productMain(){picked?main(`Add to bag · ${money(current.price)}`,addToBag):main('Pick a size',null,false)}
+function closeProduct(){
+  const v=$('product');view='home';
+  anim(v,[{transform:'translateX(0)'},{transform:'translateX(100%)'}],300).onfinish=()=>{v.hidden=true};
+  anim($('home'),[{transform:'translateX(-22%)',filter:'brightness(.92)'},{transform:'translateX(0)',filter:'brightness(1)'}],300);
+  back(false);homeMain();
+}
+function addToBag(){
+  const l=bag.find(x=>x.id===current.id&&x.size===picked);l?l.q++:bag.push({id:current.id,size:picked,q:1});
+  haptic('medium');
+  $('count').textContent=items();
+  anim($('count'),[{transform:'scale(1)'},{transform:'scale(1.5)'},{transform:'scale(1)'}],360);
+  const t=$('toast');t.innerHTML=`<img src="${current.img}" alt=""><span><b>Added to bag</b><br>${esc(current.name)} · ${picked}</span>`;t.hidden=false;
+  anim(t,[{opacity:0,transform:'translateY(16px)'},{opacity:1,transform:'translateY(0)',offset:.15},{opacity:1,transform:'translateY(0)',offset:.85},{opacity:0,transform:'translateY(8px)'}],1800).onfinish=()=>{t.hidden=true};
+  main(`View bag · ${items()}`,openBag);
+}
+function renderBag(){
+  $('bag').innerHTML=`<span class="handle"></span><h2>Your bag</h2>
+  ${bag.map((l,i)=>{const p=PRODUCTS.find(x=>x.id===l.id);return `<div class="line"><img src="${p.img}" alt=""><div><b>${esc(p.name)}</b><span class="mono">${esc(p.colour)} · ${l.size}</span>
+    <div class="step"><button data-dec="${i}" aria-label="One less">−</button><span class="num">${l.q}</span><button data-inc="${i}" aria-label="One more">+</button></div></div><span class="amt num">${money(p.price*l.q)}</span></div>`}).join('')}
+  <div class="sum"><div><span>Subtotal</span><span class="num">${money(total())}</span></div><div><span>Courier in Yerevan</span><span>Free</span></div><div><span>Ships</span><span>07.11, drop day</span></div><div class="tot"><span>Total</span><span class="num">${money(total())}</span></div></div>`;
+}
+function openBag(){
+  const t=$('toast');t.getAnimations().forEach(a=>a.cancel());t.hidden=true;
+  renderBag();$('scrim').hidden=false;$('bag').hidden=false;view='bag';
+  anim($('scrim'),[{opacity:0},{opacity:1}],260);anim($('bag'),[{transform:'translateY(100%)'},{transform:'translateY(0)'}],380);
+  back(true,closeBag);main(`Checkout · ${money(total())}`,checkout);
+}
+function closeBag(){
+  view=current&&!$('product').hidden?'product':'home';
+  anim($('scrim'),[{opacity:1},{opacity:0}],240).onfinish=()=>{$('scrim').hidden=true};
+  anim($('bag'),[{transform:'translateY(0)'},{transform:'translateY(100%)'}],280).onfinish=()=>{$('bag').hidden=true};
+  view==='product'?(back(true,closeProduct),productMain()):(back(false),homeMain());
+}
+
+// Checkout. In Telegram the bot creates an invoice link (Bot API createInvoiceLink, with shipping) and the
+// Mini App opens Telegram's own payment sheet; the bot confirms the order on successful_payment.
+const INVOICE_ENDPOINT='/api/invoice'; // served by the TUFA bot
+async function checkout(){
+  haptic('light');
+  if(inTG){
+    const r=await fetch(INVOICE_ENDPOINT,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({initData:tg.initData,bag})});
+    const {link}=await r.json();
+    tg.openInvoice(link,status=>{if(status==='paid')confirmed()});
+    return;
+  }
+  // demo: draw Telegram's sheet
+  const first=PRODUCTS.find(p=>p.id===bag[0].id);
+  $('pay').innerHTML=`<div class="ph"><span>Checkout</span><button aria-label="Close"><svg width="12" height="12" viewBox="0 0 24 24" stroke="#8A8A8E" stroke-width="3" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>
+  <div class="item"><img src="${first.img}" alt=""><div><b>TUFA · Drop 01</b><span>${items()} items · ships 07.11</span></div></div>
+  <div class="rows">
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="#2AABEE" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18"/></svg><span>Payment method<small>Card •••• 4242</small></span><span style="color:#C7C7CC">›</span></div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="#2AABEE" stroke-width="2"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Shipping address<small>Abovyan St 12, Yerevan</small></span><span style="color:#C7C7CC">›</span></div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="#2AABEE" stroke-width="2"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg><span>Shipping method<small>Courier · on drop day</small></span><span style="color:#C7C7CC">›</span></div>
+  </div>
+  <div class="prices">${bag.map(l=>{const p=PRODUCTS.find(x=>x.id===l.id);return `<div><span>${esc(p.name)} · ${l.size}</span><span class="num">${money(p.price*l.q)}</span></div>`}).join('')}
+    <div><span>Courier</span><span>$0</span></div><div class="t"><span>Total</span><span class="num">${money(total())}</span></div></div>
+  <button class="go" id="payGo">Pay ${money(total())}</button>
+  <div class="fine">Processed by Telegram Payments</div>`;
+  $('bag').hidden=true;$('scrim').hidden=false;$('pay').hidden=false;view='pay';main(null);
+  anim($('pay'),[{transform:'translateY(100%)'},{transform:'translateY(0)'}],400);
+  $('payGo').onclick=()=>{anim($('pay'),[{transform:'translateY(0)'},{transform:'translateY(100%)'}],300).onfinish=()=>{$('pay').hidden=true;confirmed()}};
+}
+function confirmed(){
+  haptic('heavy');
+  const names=bag.map(l=>`${esc(PRODUCTS.find(x=>x.id===l.id).name)} (${l.size})`).join(' and ');
+  const v=$('done');
+  v.innerHTML=`<div class="done">
+    <div class="okc" id="okc"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#151413" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <span class="mono">Order T-0107</span>
+    <h2>You're<br>in.</h2>
+    <p>${names} ship on 07.11 at 20:00, the moment the drop goes live.</p>
+    <div class="tl">
+      <div><i><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F1ECE6" stroke-width="3" stroke-linecap="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Paid<b>NOW</b></div>
+      <div><i><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F1ECE6" stroke-width="3" stroke-linecap="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Sizes held for you<b>NOW</b></div>
+      <div><i class="wait"></i>Ships with the drop<b>07.11 · 20:00</b></div>
+    </div>
+    <div class="bot"><div class="who"><i>T</i><span style="font-size:13px;font-weight:600">TUFA bot</span></div><div class="msg">Order T-0107 is confirmed ✓ I'll message you here when it ships.</div></div>
+  </div>`;
+  $('scrim').hidden=true;$('bag').hidden=true;v.hidden=false;view='done';
+  anim(v,[{opacity:0,transform:'scale(.97)'},{opacity:1,transform:'scale(1)'}],360).onfinish=()=>{$('product').hidden=true};
+  anim($('okc'),[{transform:'scale(.3)',opacity:0},{transform:'scale(1.12)',opacity:1,offset:.6},{transform:'scale(1)'}],520);
+  back(false);main('Back to the drop',()=>{bag=[];$('count').textContent='0';v.hidden=true;view='home';homeMain()});
+}
+
+document.addEventListener('click',e=>{
+  const o=e.target.closest('[data-open]');if(o)return openProduct(o.dataset.open);
+  const s=e.target.closest('.size');if(s&&!s.disabled){picked=s.dataset.s;haptic('light');document.querySelectorAll('.size').forEach(b=>b.classList.toggle('on',b===s));anim(s,[{transform:'scale(.92)'},{transform:'scale(1)'}],200);return productMain()}
+  if(e.target.closest('#bagPill')&&items())return openBag();
+  if(e.target.closest('#scrim'))return closeBag();
+  const inc=e.target.closest('[data-inc]');if(inc){bag[+inc.dataset.inc].q++;renderBag();main(`Checkout · ${money(total())}`,checkout);return}
+  const dec=e.target.closest('[data-dec]');if(dec){const l=bag[+dec.dataset.dec];l.q--;if(!l.q)bag.splice(+dec.dataset.dec,1);$('count').textContent=items();if(!items())return closeBag();renderBag();main(`Checkout · ${money(total())}`,checkout)}
+});
+renderGrid();tick();setInterval(tick,1000);homeMain();back(false);
+</script>
+</body>
+</html>

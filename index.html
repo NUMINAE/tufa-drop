@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>TUFA Pink City</title>
+<meta name="description" content="TUFA Drop 01, Pink City: a concept streetwear drop for Yerevan. Brand, product shots, lookbook and store, designed and built by Numinae Studio.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="TUFA · Drop 01 · Pink City">
+<meta property="og:description" content="TUFA Drop 01, Pink City: a concept streetwear drop for Yerevan. Brand, product shots, lookbook and store, designed and built by Numinae Studio.">
+<meta property="og:url" content="https://numinae.github.io/tufa-drop/">
+<meta property="og:image" content="https://numinae.github.io/tufa-drop/img/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TUFA · Drop 01 · Pink City">
+<meta name="twitter:description" content="TUFA Drop 01, Pink City: a concept streetwear drop for Yerevan. Brand, product shots, lookbook and store, designed and built by Numinae Studio.">
+<meta name="twitter:image" content="https://numinae.github.io/tufa-drop/img/hero.jpg">
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Instrument+Sans:wght@400;500;600&family=Martian+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a drop-day storefront. Full-bleed hero with a live countdown, a product rail that works (sizes, bag), a lookbook strip, a story block cut from tuff, a notify form, a plain-spoken footer. */
+:root{
+  --bone:#F1ECE6;      /* page ground */
+  --tuff:#D69A8A;      /* Yerevan pink tuff */
+  --tuff-deep:#9E5A4A; /* tuff in shadow; text-safe on bone */
+  --concrete:#8E8A85;
+  --basalt:#151413;    /* ink and dark sections */
+  --signal:#FF5B1F;    /* one hit per view */
+  --line:rgba(21,20,19,.14);
+  --display:'Big Shoulders Display','Arial Narrow','Helvetica Neue',sans-serif;
+  --body:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Martian Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bone);color:var(--basalt);font-family:var(--body);font-size:16px;line-height:1.55}
+img{display:block;max-width:100%}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+.wrap{max-width:1320px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.num{font-variant-numeric:tabular-nums}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--basalt)}
+
+/* ticker */
+.ticker{background:var(--basalt);color:var(--bone);overflow:hidden;white-space:nowrap}
+.ticker-track{display:inline-flex;gap:48px;padding-block:9px;animation:tick 38s linear infinite}
+.ticker-track span{font-family:var(--mono);font-size:11px;letter-spacing:.12em}
+.ticker-track b{color:var(--signal);font-weight:500}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(241,236,230,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.logo{font-family:var(--display);font-weight:900;font-size:34px;letter-spacing:.02em;line-height:1;text-decoration:none}
+nav{display:flex;gap:28px}
+nav a{text-decoration:none;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+nav a:hover{color:var(--tuff-deep)}
+.bag-btn{display:flex;align-items:center;gap:10px;background:var(--basalt);color:var(--bone);border:0;border-radius:999px;padding:10px 18px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.bag-btn .count{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:999px;background:var(--signal);color:var(--basalt);font-size:11px}
+@media (max-width:760px){nav{display:none}}
+
+/* hero */
+.hero{position:relative;min-height:min(92svh,980px);display:grid;color:var(--bone);background:var(--basalt);overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 35%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(21,20,19,.05) 30%,rgba(21,20,19,.72) 100%)}
+.hero-inner{position:relative;z-index:1;align-self:end;padding-block:48px 40px;display:grid;gap:28px}
+.drop-label{display:flex;flex-wrap:wrap;gap:10px}
+.chip{border:1px solid rgba(241,236,230,.5);border-radius:999px;padding:6px 14px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.chip.hot{background:var(--signal);border-color:var(--signal);color:var(--basalt)}
+.hero h1{margin:0;font-family:var(--display);font-weight:900;font-size:clamp(88px,20vw,300px);line-height:.82;letter-spacing:-.01em;text-transform:uppercase;text-wrap:balance}
+.hero-row{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:24px}
+.hero p{margin:0;max-width:46ch;font-size:18px;color:rgba(241,236,230,.86)}
+.countdown{display:flex;gap:10px}
+.cd{min-width:76px;padding:12px 12px 10px;border-radius:16px;background:rgba(21,20,19,.55);border:1px solid rgba(241,236,230,.22);backdrop-filter:blur(6px);text-align:center}
+.cd b{display:block;font-family:var(--display);font-weight:700;font-size:40px;line-height:1}
+.cd span{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:rgba(241,236,230,.7)}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:15px 26px;border:0;font-weight:600;font-size:15px;text-decoration:none}
+.btn.primary{background:var(--signal);color:var(--basalt)}
+.btn.ghost{background:transparent;color:var(--bone);border:1px solid rgba(241,236,230,.55)}
+.btn.dark{background:var(--basalt);color:var(--bone)}
+.btn:hover{transform:translateY(-1px)}
+
+/* section heads */
+section{padding-block:96px}
+.head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:16px;margin-bottom:40px}
+.head h2{margin:0;font-family:var(--display);font-weight:900;font-size:clamp(48px,8vw,104px);line-height:.88;text-transform:uppercase}
+.head p{margin:0;max-width:44ch;color:#4A4744}
+
+/* products */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+@media (min-width:1180px){.grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.card{display:flex;flex-direction:column;gap:14px;min-width:0}
+.card .ph{position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:var(--tuff)}
+.card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.card:hover .ph img{transform:scale(1.04)}
+.card .tag{position:absolute;top:14px;left:14px;background:var(--bone);border-radius:999px;padding:5px 12px}
+.card .meta{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.card h3{margin:0;font-family:var(--display);font-weight:700;font-size:28px;line-height:1;text-transform:uppercase}
+.card .price{font-family:var(--mono);font-size:14px}
+.card .desc{margin:0;color:#4A4744;font-size:14px}
+.sizes{display:flex;flex-wrap:wrap;gap:6px}
+.size{min-width:44px;height:38px;border-radius:999px;border:1px solid var(--line);background:transparent;font-family:var(--mono);font-size:11px}
+.size[aria-pressed="true"]{background:var(--basalt);color:var(--bone);border-color:var(--basalt)}
+.size:disabled{opacity:.35;text-decoration:line-through;cursor:not-allowed}
+.add{width:100%;justify-content:center}
+.add[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+
+/* lookbook */
+.look{background:var(--basalt);color:var(--bone)}
+.look .head p{color:rgba(241,236,230,.72)}
+.strip{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(280px,30%);gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;scrollbar-width:thin}
+.strip figure{margin:0;scroll-snap-align:start;display:flex;flex-direction:column;gap:12px}
+.strip img{aspect-ratio:4/5;width:100%;object-fit:cover;border-radius:24px}
+.strip figcaption{display:flex;justify-content:space-between;gap:12px;color:rgba(241,236,230,.7)}
+@media (max-width:760px){.strip{grid-auto-columns:82%}}
+
+/* story */
+.story{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:48px;align-items:center}
+@media (max-width:900px){.story{grid-template-columns:minmax(0,1fr)}}
+.stone{position:relative;border-radius:32px;overflow:hidden;aspect-ratio:5/4;background:var(--tuff)}
+.stone img{width:100%;height:100%;object-fit:cover}
+.story h2{margin:0 0 20px;font-family:var(--display);font-weight:900;font-size:clamp(48px,7vw,88px);line-height:.9;text-transform:uppercase}
+.story p{margin:0 0 16px;max-width:52ch;color:#3B3836}
+.specs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px}
+.spec{border:1px solid var(--line);border-radius:20px;padding:16px}
+.spec b{display:block;font-family:var(--display);font-weight:700;font-size:34px;line-height:1}
+@media (max-width:520px){.specs{grid-template-columns:minmax(0,1fr)}}
+
+/* notify */
+.notify{background:var(--tuff);border-radius:40px;padding:56px clamp(24px,5vw,72px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:center}
+@media (max-width:900px){.notify{grid-template-columns:minmax(0,1fr)}}
+.notify h2{margin:0;font-family:var(--display);font-weight:900;font-size:clamp(44px,6vw,80px);line-height:.9;text-transform:uppercase}
+.notify form{display:flex;flex-wrap:wrap;gap:10px}
+.notify input{flex:1 1 220px;min-width:0;height:54px;border-radius:999px;border:1px solid rgba(21,20,19,.35);background:var(--bone);padding:0 22px}
+.notify .note{flex-basis:100%;margin:4px 0 0;font-size:13px;color:#3B2A25}
+
+/* footer */
+footer{padding-block:56px 40px;border-top:1px solid var(--line);margin-top:96px}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px}
+.foot .logo{font-size:72px}
+.foot p{margin:0;max-width:52ch;color:#4A4744;font-size:14px}
+
+/* bag drawer */
+.scrim{position:fixed;inset:0;background:rgba(21,20,19,.45);z-index:70}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--bone);z-index:80;display:flex;flex-direction:column;
+  padding:calc(20px + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) 20px;border-radius:28px 0 0 28px}
+.drawer-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.drawer-head h2{margin:0;font-family:var(--display);font-weight:900;font-size:40px;text-transform:uppercase}
+.x{width:44px;height:44px;border-radius:999px;border:1px solid var(--line);background:transparent;font-size:20px}
+.lines{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:14px;padding-block:16px}
+.line{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:14px;align-items:center}
+.line img{width:72px;height:90px;object-fit:cover;border-radius:14px;background:var(--tuff)}
+.line h4{margin:0;font-family:var(--display);font-size:22px;text-transform:uppercase}
+.qty{display:flex;align-items:center;gap:8px;margin-top:6px}
+.qty button{width:32px;height:32px;border-radius:999px;border:1px solid var(--line);background:transparent}
+.empty{color:#4A4744}
+.total{display:flex;justify-content:space-between;padding-block:16px;border-top:1px solid var(--line);font-weight:600}
+.checkout-msg{margin:10px 0 0;font-size:13px;color:#4A4744}
+.scrim:not([hidden]){animation:fadeIn .3s ease both}
+.drawer:not([hidden]){animation:slideIn .42s cubic-bezier(.2,.8,.2,1) both}
+@keyframes fadeIn{from{opacity:0}}
+@keyframes slideIn{from{transform:translateX(104%)}}
+.bag-btn .count.bump{animation:bump .45s cubic-bezier(.3,1.6,.5,1)}
+@keyframes bump{40%{transform:scale(1.45)}}
+@media (prefers-reduced-motion:reduce){.scrim,.drawer,.bag-btn .count{animation:none!important}}
+</style>
+
+<div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="#top">TUFA</a>
+    <nav aria-label="Sections">
+      <a href="#drop">Drop 01</a>
+      <a href="#lookbook">Lookbook</a>
+      <a href="#story">Story</a>
+      <a href="#notify">Notify me</a>
+    </nav>
+    <button class="bag-btn" id="bagBtn" aria-label="Open bag">Bag <span class="count num" id="bagCount">0</span></button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="heroTitle" style="padding:0">
+    <img src="img/hero.jpg" alt="A model in a rose tee and grey cargo pants stands in a pink tuff stone archway">
+    <div class="wrap hero-inner">
+      <div class="drop-label">
+        <span class="chip hot">Drop 01</span>
+        <span class="chip">Yerevan</span>
+        <span class="chip num" id="dropDate">07.11 · 20:00</span>
+      </div>
+      <h1 id="heroTitle">Pink<br>City</h1>
+      <div class="hero-row">
+        <p>Five pieces cut from the colours of a city built in volcanic stone. Heavyweight, washed, made to be worn on the stairs.</p>
+        <div class="countdown" role="timer" aria-live="off" aria-label="Time until the drop">
+          <div class="cd"><b class="num" id="cdD">00</b><span>DAYS</span></div>
+          <div class="cd"><b class="num" id="cdH">00</b><span>HRS</span></div>
+          <div class="cd"><b class="num" id="cdM">00</b><span>MIN</span></div>
+          <div class="cd"><b class="num" id="cdS">00</b><span>SEC</span></div>
+        </div>
+      </div>
+      <div class="cta-row">
+        <a class="btn primary" href="#drop">Shop the preview</a>
+        <a class="btn ghost" href="#notify">Get the drop alert</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="drop" class="wrap" aria-labelledby="dropTitle">
+    <div class="head">
+      <h2 id="dropTitle">Drop 01</h2>
+      <p>Early access is open. Pick a size, add it to your bag, and it ships the day the drop goes live.</p>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="lookbook" class="look" aria-labelledby="lookTitle">
+    <div class="wrap">
+      <div class="head">
+        <h2 id="lookTitle">Lookbook</h2>
+        <p>Shot around the stairs, arches and walls the drop is named after. Swipe through.</p>
+      </div>
+      <div class="strip" id="strip" tabindex="0" aria-label="Lookbook images"></div>
+    </div>
+  </section>
+
+  <section id="story" class="wrap" aria-labelledby="storyTitle">
+    <div class="story">
+      <div class="stone"><img src="img/look-detail.jpg" alt="Hands adjusting the strap of an orange crossbody bag over a black hoodie"></div>
+      <div>
+        <p class="mono" style="color:var(--tuff-deep);margin-bottom:14px">The story</p>
+        <h2 id="storyTitle">Built from the city</h2>
+        <p>Yerevan is built from tuff, a soft volcanic stone that turns pink in the evening sun. It is why people call it the Pink City.</p>
+        <p>Drop 01 takes its palette straight from the street: tuff rose, concrete grey, basalt black, and one signal orange for the things you should not lose.</p>
+        <div class="specs">
+          <div class="spec"><b class="num">480</b><span class="mono">GSM fleece</span></div>
+          <div class="spec"><b class="num">5</b><span class="mono">pieces</span></div>
+          <div class="spec"><b class="num">300</b><span class="mono">units each</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="notify" class="wrap" aria-labelledby="notifyTitle" style="padding-block:0">
+    <div class="notify">
+      <h2 id="notifyTitle">Don't miss 20:00</h2>
+      <form id="notifyForm" novalidate>
+        <label for="email" class="mono" style="flex-basis:100%">Email for the drop alert</label>
+        <input id="email" type="email" placeholder="you@email.com" autocomplete="email" required>
+        <button class="btn dark" type="submit">Notify me</button>
+        <p class="note" id="notifyNote" role="status">One email when the drop opens. Nothing else.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span class="logo">TUFA</span>
+    <p>TUFA is a fictional brand. This concept storefront was designed and built by Numinae Studio to show a streetwear drop end to end: brand, product imagery, lookbook and store. Nothing here is for sale.</p>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-label="Your bag">
+  <div class="drawer-head"><h2>Bag</h2><button class="x" id="closeBag" aria-label="Close bag">×</button></div>
+  <div class="lines" id="lines"></div>
+  <div class="total"><span>Subtotal</span><span class="num" id="subtotal">$0</span></div>
+  <button class="btn primary" id="checkout" style="justify-content:center">Checkout</button>
+  <p class="checkout-msg" id="checkoutMsg" role="status"></p>
+</aside>
+
+<script>
+const PRODUCTS=[
+  {id:'basalt',name:'Basalt Hoodie',colour:'Washed black',price:120,img:'img/product-hoodie.jpg',desc:'480 GSM brushed fleece, dropped shoulder, double-layer hood.',sizes:['S','M','L','XL'],soldOut:['S']},
+  {id:'tuff',name:'Tuff Tee',colour:'Dusty rose',price:55,img:'img/product-tee.jpg',desc:'Boxy heavyweight jersey, garment-dyed to the colour of the stone.',sizes:['S','M','L','XL'],soldOut:[]},
+  {id:'cascade',name:'Cascade Cargo',colour:'Concrete grey',price:110,img:'img/product-cargo.jpg',desc:'Wide-leg ripstop with bellows pockets and ankle cords.',sizes:['S','M','L','XL'],soldOut:['XL']},
+  {id:'arch',name:'Arch Cap',colour:'Washed black',price:40,img:'img/product-cap.jpg',desc:'Unstructured six-panel canvas with a signal-orange tab.',sizes:['ONE'],soldOut:[]},
+  {id:'signal',name:'Signal Bag',colour:'Signal orange',price:75,img:'img/product-bag.jpg',desc:'Technical nylon crossbody for keys, phone and the rest.',sizes:['ONE'],soldOut:[]},
+];
+const LOOKS=[
+  {img:'img/look-arch.jpg',cap:'Tuff Tee · Cascade Cargo · Arch Cap',alt:'A woman in a rose tee and grey cargos in a tuff archway'},
+  {img:'img/look-stairs.jpg',cap:'Basalt Hoodie · Cascade Cargo · Signal Bag',alt:'A man in a black hoodie sitting on stone stairs'},
+  {img:'img/look-duo.jpg',cap:'The full drop, on the street',alt:'Two friends walking along a pink stone wall'},
+  {img:'img/look-detail.jpg',cap:'Signal Bag · Basalt Hoodie',alt:'Close-up of an orange bag strap over a black hoodie'},
+];
+// Drop time: 7 November 2026, 20:00 Yerevan (UTC+4)
+const DROP=Date.UTC(2026,10,7,16,0,0);
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+
+$('ticker').innerHTML=Array(2).fill(['DROP 01 <b>PINK CITY</b>','07.11 · 20:00 YEREVAN','FIVE PIECES · 300 UNITS EACH','EARLY ACCESS OPEN','FREE SHIPPING OVER $150']).flat().map(t=>`<span>${t}</span>`).join('');
+
+function tick(){
+  let d=Math.max(0,DROP-Date.now());
+  const D=Math.floor(d/864e5);d-=D*864e5;const H=Math.floor(d/36e5);d-=H*36e5;const M=Math.floor(d/6e4);d-=M*6e4;const S=Math.floor(d/1e3);
+  $('cdD').textContent=pad(D);$('cdH').textContent=pad(H);$('cdM').textContent=pad(M);$('cdS').textContent=pad(S);
+}
+tick();setInterval(tick,1000);
+
+// bag state
+let bag=[];
+try{bag=JSON.parse(localStorage.getItem('tufa-bag')||'[]')}catch(e){bag=[]}
+const save=()=>{try{localStorage.setItem('tufa-bag',JSON.stringify(bag))}catch(e){}};
+const picked={};
+
+function renderGrid(){
+  $('grid').innerHTML=PRODUCTS.map(p=>{
+    const one=p.sizes.length===1;
+    if(one&&!picked[p.id])picked[p.id]=p.sizes[0];
+    return `<article class="card">
+      <div class="ph"><img src="${p.img}" alt="${esc(p.name)} in ${esc(p.colour.toLowerCase())}"><span class="tag mono">${esc(p.colour)}</span></div>
+      <div class="meta"><h3>${esc(p.name)}</h3><span class="price num">$${p.price}</span></div>
+      <p class="desc">${esc(p.desc)}</p>
+      <div class="sizes" role="group" aria-label="${esc(p.name)} size">
+        ${p.sizes.map(s=>`<button class="size" data-p="${p.id}" data-s="${s}" aria-pressed="${picked[p.id]===s}" ${p.soldOut.includes(s)?'disabled aria-label="'+s+', sold out"':''}>${s}</button>`).join('')}
+      </div>
+      <button class="btn dark add" data-add="${p.id}" ${picked[p.id]?'':'disabled'}>${picked[p.id]?'Add to bag · '+picked[p.id]:'Pick a size'}</button>
+    </article>`}).join('');
+}
+function renderStrip(){
+  $('strip').innerHTML=LOOKS.map((l,i)=>`<figure><img src="${l.img}" alt="${esc(l.alt)}" loading="lazy"><figcaption><span class="mono">Look 0${i+1}</span><span>${esc(l.cap)}</span></figcaption></figure>`).join('');
+}
+function renderBag(){
+  const n=bag.reduce((a,l)=>a+l.q,0),c=$('bagCount');
+  if(c.textContent!==String(n)){c.textContent=n;c.classList.remove('bump');void c.offsetWidth;c.classList.add('bump')}
+  if(!bag.length){$('lines').innerHTML='<p class="empty">Your bag is empty. Pick a size on any piece to add it.</p>'}
+  else $('lines').innerHTML=bag.map((l,i)=>{const p=PRODUCTS.find(x=>x.id===l.id);return `<div class="line">
+    <img src="${p.img}" alt="">
+    <div><h4>${esc(p.name)}</h4><span class="mono">${esc(p.colour)} · ${l.s}</span>
+      <div class="qty"><button data-dec="${i}" aria-label="One fewer">−</button><span class="num">${l.q}</span><button data-inc="${i}" aria-label="One more">+</button></div></div>
+    <span class="num">$${p.price*l.q}</span></div>`}).join('');
+  $('subtotal').textContent='$'+bag.reduce((a,l)=>a+PRODUCTS.find(x=>x.id===l.id).price*l.q,0);
+}
+function openBag(){$('scrim').hidden=false;$('drawer').hidden=false;$('closeBag').focus()}
+function closeBag(){$('scrim').hidden=true;$('drawer').hidden=true;$('checkoutMsg').textContent='';$('bagBtn').focus()}
+
+document.addEventListener('click',e=>{
+  const s=e.target.closest('.size');
+  if(s){picked[s.dataset.p]=s.dataset.s;renderGrid();return}
+  const a=e.target.closest('[data-add]');
+  if(a){const id=a.dataset.add,sz=picked[id];if(!sz)return;const l=bag.find(x=>x.id===id&&x.s===sz);l?l.q++:bag.push({id,s:sz,q:1});save();renderBag();openBag();return}
+  const inc=e.target.closest('[data-inc]');if(inc){bag[+inc.dataset.inc].q++;save();renderBag();return}
+  const dec=e.target.closest('[data-dec]');if(dec){const i=+dec.dataset.dec;bag[i].q--;if(bag[i].q<=0)bag.splice(i,1);save();renderBag();return}
+});
+$('bagBtn').onclick=openBag;$('closeBag').onclick=closeBag;$('scrim').onclick=closeBag;
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('drawer').hidden)closeBag()});
+$('checkout').onclick=()=>{$('checkoutMsg').textContent=bag.length?'Checkout is switched off: TUFA is a concept store, so nothing is charged or shipped.':'Add a piece first.'};
+$('notifyForm').addEventListener('submit',e=>{
+  e.preventDefault();const v=$('email').value.trim();
+  $('notifyNote').textContent=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)?"You'd be on the list. This is a concept store, so your email was not sent anywhere.":'Enter a valid email address.';
+});
+renderGrid();renderStrip();renderBag();
+</script>
+</body>
+</html>
